@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Container Dashboard | A²ZERO</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="skip"><a href="#main">Skip to Main Content</a></div>
+
+<header>
+    <img src="images/a2zero-logo.png" alt="A²ZERO: Equitable, Sustainable, Transformative" class="logo" width="200" height="126">
+    <h1>A<sup>2</sup>ZERO Reusable Takeout Containers Dashboard</h1>
+</header>
+
+<nav aria-label="Dashboard sections">
+    <ul>
+        <li><button class="tab-btn active" data-tab="overview" aria-pressed="true">Overview</button></li>
+        <li><button class="tab-btn" data-tab="containers" aria-pressed="false">Containers</button></li>
+        <li><button class="tab-btn" data-tab="transactions" aria-pressed="false">Transactions</button></li>
+        <li><button class="tab-btn" data-tab="users" aria-pressed="false">Library Card Users</button></li>
+    </ul>
+</nav>
+
+<main id="main">
+
+<!-- OVERVIEW -->
+<section id="overview" class="tab-panel">
+    <h2>Overview</h2>
+    <p class="as-of">As of <span id="today-date"></span></p>
+
+    <!-- each number is a button that opens the Containers tab filtered to that status -->
+    <div class="stats">
+        <button class="stat" data-status="circulation">
+            <span class="stat-number" id="stat-circulation"></span>
+            <span class="stat-label">In circulation</span>
+        </button>
+        <button class="stat" data-status="Checked out">
+            <span class="stat-number" id="stat-out"></span>
+            <span class="stat-label">Checked out</span>
+        </button>
+        <button class="stat" data-status="In processing">
+            <span class="stat-number" id="stat-processing"></span>
+            <span class="stat-label">In processing</span>
+        </button>
+        <button class="stat" data-status="Available">
+            <span class="stat-number" id="stat-available"></span>
+            <span class="stat-label">Available</span>
+        </button>
+        <button class="stat" data-status="Retired">
+            <span class="stat-number" id="stat-retired"></span>
+            <span class="stat-label">Retired</span>
+        </button>
+    </div>
+
+    <div class="overview-grid">
+        <div class="box flag-box">
+            <h3>Overdue library card returns</h3>
+            <ul id="overdue-list" class="flag-list"></ul>
+        </div>
+
+        <div class="box flag-box">
+            <h3>30+ uses</h3>
+            <p class="box-note">Inspect these. Keep them in service or retire them.</p>
+            <ul id="threshold-list" class="flag-list"></ul>
+        </div>
+
+        <div class="box location-box">
+            <h3>Most checkouts by restaurant</h3>
+            <ul id="location-list" class="location-list"></ul>
+        </div>
+    </div>
+</section>
+
+<!-- CONTAINERS -->
+<section id="containers" class="tab-panel" hidden>
+    <h2>Containers</h2>
+    <p>Every container in the program. This table shows where each one is right now.</p>
+
+    <div class="filters">
+        <label>Search
+            <input type="search" id="container-search" placeholder="Container ID">
+        </label>
+        <label>Status
+            <select id="container-status">
+                <option value="all">All</option>
+                <option value="circulation">In circulation</option>
+                <option>Available</option>
+                <option>Checked out</option>
+                <option>In processing</option>
+                <option>Retired</option>
+            </select>
+        </label>
+        <label>Location
+            <select id="container-location">
+                <option value="all">All</option>
+                <option>Savas</option>
+                <option>Mani</option>
+                <option>Gandy Dancer</option>
+            </select>
+        </label>
+        <label class="checkbox">
+            <input type="checkbox" id="container-overdue"> Overdue only
+        </label>
+    </div>
+
+    <div class="table-wrap">
+        <table>
+            <caption>All containers</caption>
+            <thead>
+                <tr>
+                    <th scope="col">Container ID</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Location</th>
+                    <th scope="col">Times Reused</th>
+                    <th scope="col">Track</th>
+                    <th scope="col">Entered Service</th>
+                    <th scope="col">Condition</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody id="containers-body"></tbody>
+        </table>
+    </div>
+    <p id="containers-status" class="visually-hidden" role="status"></p>
+</section>
+
+<!-- TRANSACTIONS -->
+<section id="transactions" class="tab-panel" hidden>
+    <h2>Transactions</h2>
+    <p>Every checkout, return and restock scan, newest first. Deposit rows never show a name or card number.</p>
+
+    <div class="filters">
+        <label>Search
+            <input type="search" id="transaction-search" placeholder="Container ID">
+        </label>
+        <label>Event
+            <select id="transaction-event">
+                <option value="all">All</option>
+                <option>Checkout</option>
+                <option>Return</option>
+                <option>Restock</option>
+            </select>
+        </label>
+        <label>Track
+            <select id="transaction-track">
+                <option value="all">All</option>
+                <option>Deposit</option>
+                <option>Library Card</option>
+            </select>
+        </label>
+        <label>Location
+            <select id="transaction-location">
+                <option value="all">All</option>
+                <option>Savas</option>
+                <option>Mani</option>
+                <option>Gandy Dancer</option>
+            </select>
+        </label>
+    </div>
+
+    <div class="table-wrap">
+        <table>
+            <caption>All scans</caption>
+            <thead>
+                <tr>
+                    <th scope="col">Transaction ID</th>
+                    <th scope="col">Container ID</th>
+                    <th scope="col">Event</th>
+                    <th scope="col">Date &amp; Time</th>
+                    <th scope="col">Location</th>
+                    <th scope="col">Track</th>
+                    <th scope="col">User ID</th>
+                    <th scope="col">Payment Token</th>
+                    <th scope="col">Deposit</th>
+                    <th scope="col">Return Due By</th>
+                </tr>
+            </thead>
+            <tbody id="transactions-body"></tbody>
+        </table>
+    </div>
+    <p id="transactions-status" class="visually-hidden" role="status"></p>
+</section>
+
+<!-- LIBRARY CARD USERS -->
+<section id="users" class="tab-panel" hidden>
+    <h2>Library Card Users</h2>
+    <p>Residents who signed up for a library card. This is the only table with personal information.</p>
+
+    <div class="filters">
+        <label>Search
+            <input type="search" id="user-search" placeholder="Name or user ID">
+        </label>
+        <label>Sign-up date
+            <select id="user-sort">
+                <option value="newest">Newest first</option>
+                <option value="oldest">Oldest first</option>
+            </select>
+        </label>
+        <label class="checkbox">
+            <input type="checkbox" id="user-overdue"> Overdue only
+        </label>
+    </div>
+
+    <div class="table-wrap">
+        <table>
+            <caption>Library card users</caption>
+            <thead>
+                <tr>
+                    <th scope="col">User ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Containers Out</th>
+                    <th scope="col">Sign-up Date</th>
+                </tr>
+            </thead>
+            <tbody id="users-body"></tbody>
+        </table>
+    </div>
+    <p id="users-status" class="visually-hidden" role="status"></p>
+</section>
+
+</main>
+
+<!-- CONTAINER HISTORY POPUP -->
+<!-- filled in by main.js when you click a container ID -->
+<dialog id="history-dialog" aria-labelledby="history-title">
+    <div class="dialog-header">
+        <h3 id="history-title">Container history</h3>
+        <button class="close-btn" id="history-close" aria-label="Close history">&times;</button>
+    </div>
+    <p id="history-summary"></p>
+    <div class="table-wrap">
+        <table>
+            <caption>Scan history, oldest first</caption>
+            <thead>
+                <tr>
+                    <th scope="col">Transaction ID</th>
+                    <th scope="col">Event</th>
+                    <th scope="col">Date &amp; Time</th>
+                    <th scope="col">Location</th>
+                    <th scope="col">Track</th>
+                    <th scope="col">User ID</th>
+                    <th scope="col">Payment Token</th>
+                    <th scope="col">Deposit</th>
+                    <th scope="col">Return Due By</th>
+                </tr>
+            </thead>
+            <tbody id="history-body"></tbody>
+        </table>
+    </div>
+</dialog>
+
+<footer>
+    <p><em>All data in this dashboard is fictitious sample data.</em></p>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

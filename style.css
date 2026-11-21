@@ -1,0 +1,517 @@
+/* colors from the A2ZERO branding guidelines
+   #003333 dark teal, #296643 forest, #447B1F green,
+   #99CC33 lime, #D9E6D2 sage, #FFFFFF white */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Lexend", Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  line-height: 1.4;
+  background-color: #D9E6D2;
+  color: #003333;
+  display: grid;
+  /* skip link, header, nav, main, footer. minmax keeps wide tables from stretching the page */
+  grid-template-rows: auto auto auto 1fr auto;
+  grid-template-columns: minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+/* branding says headings and titles are all caps */
+h1, h2, h3, caption, th {
+  text-transform: uppercase;
+}
+
+.skip a {
+  position: absolute;
+  top: -80px;
+  left: 10px;
+  background-color: #003333;
+  color: #ffffff;
+  padding: 8px 10px;
+  text-decoration: none;
+  z-index: 1000;
+}
+
+.skip a:focus {
+  top: 10px;
+}
+
+*:focus-visible {
+  outline: 3px solid #447B1F;
+  outline-offset: 2px;
+}
+
+/* green is too faint on the dark teal tab bar (2.7:1), lime passes (7.3:1) */
+nav *:focus-visible {
+  outline-color: #99CC33;
+}
+
+/* hidden on screen but still read out by screen readers */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+
+/* HEADER */
+
+/* same sage as the logo's background so the logo blends in */
+header {
+  background-color: #D9E6D2;
+  padding: 16px 24px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 24px;
+}
+
+.logo {
+  width: 140px;
+  height: auto;
+  display: block;
+}
+
+h1 {
+  font-size: 26px;
+  font-weight: 700;
+}
+
+/* keep the superscript 2 from pushing the line height around */
+h1 sup {
+  font-size: 0.6em;
+  line-height: 0;
+}
+
+
+/* TABS */
+
+nav {
+  background-color: #003333;
+  padding: 0 24px;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.tab-btn {
+  font-family: inherit;
+  font-size: 16px;
+  padding: 14px 20px;
+  border: none;
+  background-color: transparent;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.tab-btn:hover {
+  background-color: #296643;
+}
+
+.tab-btn.active {
+  background-color: #99CC33;
+  color: #003333;
+  font-weight: 600;
+}
+
+
+/* MAIN */
+
+main {
+  padding: 32px 24px;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+h2 {
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+
+h2 + p {
+  margin-bottom: 24px;
+}
+
+h3 {
+  font-size: 18px;
+  margin-bottom: 4px;
+}
+
+
+/* OVERVIEW */
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+/* the stat cards are buttons, so reset the default button look */
+.stat {
+  font-family: inherit;
+  text-align: left;
+  border: 2px solid #ffffff;
+  background-color: #ffffff;
+  color: #003333;
+  border-radius: 12px;
+  padding: 16px 20px;
+  cursor: pointer;
+}
+
+.stat:hover {
+  border-color: #296643;
+}
+
+.stat-number {
+  display: block;
+  font-size: 36px;
+  font-weight: 700;
+}
+
+.stat-label {
+  display: block;
+  font-size: 16px;
+  color: #296643;
+}
+
+.box-note {
+  margin-top: -8px;
+  margin-bottom: 12px;
+}
+
+/* the 30+ list has buttons on the right of each row */
+#threshold-list li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+#threshold-list .row-text {
+  flex: 1;
+}
+
+.overview-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.box {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.box h3 {
+  margin-bottom: 12px;
+}
+
+.location-box {
+  grid-column: 1 / -1;
+}
+
+.flag-list {
+  list-style: none;
+}
+
+.flag-list li {
+  padding: 8px 0;
+  border-top: 1px solid #D9E6D2;
+}
+
+.flag-list strong {
+  display: inline-block;
+  min-width: 90px;
+}
+
+.location-list {
+  list-style: none;
+  margin-top: 12px;
+}
+
+.location-list li {
+  display: grid;
+  grid-template-columns: 200px 1fr auto;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.bar {
+  height: 16px;
+  background-color: #447B1F;
+  border-radius: 8px;
+}
+
+.bar-count {
+  font-weight: 600;
+  text-align: right;
+}
+
+
+/* FILTERS */
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.filters label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-weight: 600;
+}
+
+.filters input[type="search"],
+.filters select {
+  font-family: inherit;
+  font-size: 16px;
+  padding: 8px 10px;
+  border: 2px solid #296643;
+  border-radius: 8px;
+  background-color: #ffffff;
+  color: #003333;
+  min-width: 180px;
+}
+
+/* brand forest green instead of the browser's gray */
+.filters input::placeholder {
+  color: #296643;
+}
+
+/* the checkbox sits next to its text instead of above it */
+.filters .checkbox {
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 10px;
+}
+
+.filters .checkbox input {
+  width: 20px;
+  height: 20px;
+  accent-color: #296643;
+}
+
+
+/* TABLES */
+
+.table-wrap {
+  overflow-x: auto;
+  background-color: #ffffff;
+  border-radius: 12px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+caption {
+  text-align: left;
+  font-weight: 700;
+  padding: 16px 16px 8px;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 10px 12px;
+}
+
+/* headers can wrap, but keep dates and IDs on one line */
+td {
+  white-space: nowrap;
+}
+
+th {
+  background-color: #296643;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #f2f7ef;
+}
+
+/* status tags */
+.tag {
+  display: inline-block;
+  white-space: nowrap;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-weight: 600;
+}
+
+/* thin forest outline so the light tag stands out from the rows.
+   padding is 1px smaller to make up for the border, so it's the same size as the other tags */
+.tag-available {
+  background-color: #D9E6D2;
+  color: #003333;
+  border: 1px solid #296643;
+  padding: 1px 9px;
+}
+
+.tag-out {
+  background-color: #99CC33;
+  color: #003333;
+}
+
+.tag-processing {
+  background-color: #447B1F;
+  color: #ffffff;
+}
+
+.tag-retired {
+  background-color: #003333;
+  color: #ffffff;
+}
+
+/* white text on dark teal, with a lime outline so it stands apart from "retired" */
+.tag-overdue {
+  background-color: #003333;
+  color: #ffffff;
+  border: 2px solid #99CC33;
+  margin-left: 6px;
+}
+
+.retire-btn,
+.keep-btn {
+  font-family: inherit;
+  font-size: 16px;
+  padding: 4px 12px;
+  border: 2px solid #003333;
+  border-radius: 8px;
+  background-color: #ffffff;
+  color: #003333;
+  cursor: pointer;
+}
+
+.retire-btn:hover,
+.keep-btn:hover {
+  background-color: #003333;
+  color: #ffffff;
+}
+
+/* container IDs look like links and open the history popup */
+.id-btn {
+  font-family: inherit;
+  font-size: 16px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: #296643;
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.id-btn:hover {
+  color: #003333;
+}
+
+
+/* HISTORY POPUP */
+
+dialog {
+  width: min(1200px, calc(100% - 32px));
+  margin: auto;
+  border: none;
+  border-radius: 12px;
+  padding: 24px;
+  background-color: #D9E6D2;
+  color: #003333;
+}
+
+dialog::backdrop {
+  background-color: rgba(0, 51, 51, 0.6);
+}
+
+.dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.dialog-header h3 {
+  font-size: 22px;
+  margin: 0;
+}
+
+#history-summary {
+  margin-bottom: 16px;
+}
+
+.close-btn {
+  font-family: inherit;
+  font-size: 28px;
+  line-height: 1;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 8px;
+  background-color: #003333;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.no-results {
+  text-align: center;
+  padding: 24px;
+}
+
+
+/* FOOTER */
+
+footer {
+  background-color: #003333;
+  color: #ffffff;
+  padding: 16px 24px;
+  text-align: center;
+}
+
+
+/* SMALLER SCREENS */
+
+@media (max-width: 800px) {
+  header {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .stats {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .overview-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .location-list li {
+    grid-template-columns: 1fr auto;
+  }
+
+  .location-list .bar {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+}
